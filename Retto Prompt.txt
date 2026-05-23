@@ -1,0 +1,219 @@
+Build a modern, lightweight, fast-loading web platform called “Retto” for college students to discover opportunities such as internships, jobs, research programs, fellowships, summer schools, apprenticeships, hackathons, workshops, and competitions.
+
+Core Philosophy:
+- Extremely fast website
+- Lightweight UI
+- Minimal database reads
+- Professional and clean appearance
+- No unnecessary animations or heavy graphics
+- Optimised for low-end devices and mobile users
+- High security
+- Scalable architecture
+
+Tech Stack:
+- Next.js 15 + TypeScript
+- Tailwind CSS
+- Firebase Authentication
+- Firebase Firestore
+- Firebase Security Rules
+- Deployment-ready for Vercel
+
+Authentication:
+- Google Sign-In only
+- No OTP system
+- Persistent login sessions
+- Secure route protection
+
+Website Name:
+“Retto”
+
+Global Design Requirements:
+- Professional boxy layout
+- Sharp clean cards
+- Minimalist design
+- Times New Roman font across entire website
+- Responsive design
+- Fast transitions only
+- Hover effects on cards/buttons
+- Light mode and dark mode toggle
+- No glassmorphism
+- No heavy shadows
+- No unnecessary gradients
+- Optimised accessibility
+- Optimised SEO
+
+Typography Rules:
+- Opportunity titles must automatically convert to FULL CAPITAL LETTERS
+- Subtitle/description should remain normal sentence case
+
+Main Features:
+
+1. Landing Page
+Include:
+- Clean professional navbar
+- Retto logo/text
+- Search bar
+- Trending opportunities
+- Recent opportunities
+- Popular categories
+- Light/Dark toggle
+- Login button
+- Fully responsive layout
+
+2. Categories
+Create category pages for:
+- Physics
+- Chemistry
+- Biology
+- Economics
+- Engineering
+- SDE
+- Finance
+- Research
+- Government
+- Data Science
+- MBA
+
+Each category page should:
+- Load quickly
+- Support filtering
+- Support searching
+- Use reusable components
+
+3. Opportunity Card
+Each card should contain:
+- Opportunity title (FULL CAPS automatically)
+- Organisation name
+- Small subtitle
+- Eligibility
+- Deadline
+- Tags
+- Category
+- Apply button
+- Posted date
+
+Design:
+- Clean border-based cards
+- Subtle hover effects
+- Professional spacing
+- Box-style layout
+
+4. Opportunity Detail Page
+Display:
+- Full details
+- Eligibility
+- Application process
+- Deadline
+- Apply link
+- Related opportunities
+
+Optimise page using:
+- Static rendering where possible
+- Minimal Firestore reads
+
+5. Admin Dashboard
+Secure admin-only dashboard with:
+- Add opportunity
+- Edit opportunity
+- Delete opportunity
+- Category management
+- AI-assisted tagging/filtering
+- Rich text support
+- Search opportunities
+- Mobile responsive admin panel
+
+6. AI Filtering System
+Implement lightweight AI-based filtering logic:
+- Auto-detect relevant categories from description
+- Auto-suggest tags
+- Smart keyword-based recommendations
+- Similar opportunity recommendations
+- AI-assisted search relevance
+
+Do NOT use expensive heavy AI APIs initially.
+Use lightweight local logic and keyword matching architecture.
+
+7. Search & Filtering
+Implement:
+- Keyword search
+- Category filtering
+- Deadline sorting
+- Tag filtering
+- Smart search relevance
+
+8. Bookmark Feature
+Users can:
+- Save opportunities
+- View saved opportunities later
+
+9. Performance Optimisation
+Must prioritise:
+- Fast page load speed
+- Low bandwidth usage
+- Minimal JavaScript
+- Image-free lightweight design
+- Cached pages
+- Static generation
+- Lazy loading where needed
+- Optimised Firestore queries
+
+10. Security Requirements
+Implement strong free-tier security:
+- Firebase Security Rules
+- Admin role validation
+- Protected routes
+- Environment variables
+- Input sanitisation
+- Rate limiting architecture
+- Prevent unauthorised database writes
+
+11. Database Structure
+Create Firestore collections:
+- users
+- opportunities
+- categories
+- bookmarks
+- admins
+
+12. Technical Requirements
+Generate:
+- Clean scalable folder structure
+- Reusable components
+- Proper TypeScript types
+- Firebase setup
+- Firestore setup
+- Tailwind configuration
+- Theme toggle system
+- Dummy data examples
+- Vercel deployment instructions
+
+13. UI Behaviour
+- Fast hover effects
+- Responsive navbar
+- Sticky navigation
+- Clean transitions
+- Instant category navigation
+- Optimised mobile experience
+
+14. Final Theme
+The website should feel:
+- Professional
+- Academic
+- Minimal
+- Fast
+- Trustworthy
+- Clean
+- Startup-quality
+- Similar to a premium opportunity discovery platform for serious students
+
+Priority Order:
+1. Speed
+2. Simplicity
+3. Security
+4. Scalability
+5. Professional appearance
+
+Edit 1: note that the opportunities should automatically delete 30 days after the deadline 
+Edit 2:i want to make colour of the website as something that represents growth, use different shades and a clean professional look
+Edit 3: add ""About Us, Disclaimer, Lisence''
+Edit 4: also 1 opportunity could take multiple ares for eg (phy, engg) or (engg, eco) etc.

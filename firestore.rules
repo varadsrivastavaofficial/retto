@@ -1,0 +1,91 @@
+// ── Firestore Security Rules for Retto ───────────────────────────────────────
+// Deploy with: firebase deploy --only firestore:rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ────────────────────────────────────────────────────
+
+    // Check if the requesting user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if the requesting user's email is in the admins collection
+    function isAdmin() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.token.email));
+    }
+
+    // Validate that a string field is non-empty and within length
+    function isValidString(val, maxLen) {
+      return val is string && val.size() > 0 && val.size() <= maxLen;
+    }
+
+    // Validate opportunity write data
+    function isValidOpportunity() {
+      let d = request.resource.data;
+      return isValidString(d.title, 300)
+          && isValidString(d.organisation, 200)
+          && isValidString(d.category, 50)
+          && isValidString(d.deadline, 20)
+          && isValidString(d.applyLink, 500)
+          && d.tags is list
+          && d.tags.size() <= 20;
+    }
+
+    // ── opportunities ───────────────────────────────────────────────────────
+    match /opportunities/{oppId} {
+      // Authenticated users can read
+      allow read: if isAuthenticated();
+
+      // Only admins can write (with validation)
+      allow create: if isAdmin() && isValidOpportunity();
+      allow update: if isAdmin() && isValidOpportunity();
+      allow delete: if isAdmin();
+    }
+
+    // ── categories ──────────────────────────────────────────────────────────
+    match /categories/{catId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // ── users ───────────────────────────────────────────────────────────────
+    match /users/{userId} {
+      // Users can read and write their own profile only
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ── bookmarks ───────────────────────────────────────────────────────────
+    match /bookmarks/{bookmarkId} {
+      // Bookmark ID format: userId_opportunityId
+      allow read: if isAuthenticated() &&
+        resource.data.userId == request.auth.uid;
+
+      allow create: if isAuthenticated() &&
+        request.resource.data.userId == request.auth.uid &&
+        isValidString(request.resource.data.opportunityId, 100);
+
+      allow delete: if isAuthenticated() &&
+        resource.data.userId == request.auth.uid;
+
+      // No updates to bookmarks — delete and recreate
+      allow update: if false;
+    }
+
+    // ── admins ──────────────────────────────────────────────────────────────
+    // Admin collection is read-only by the system (server-side only)
+    // No client can read or write — even admins
+    match /admins/{email} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // ── Deny all other paths ────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,538 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   RETTO — Global Design System
+   Font: Times New Roman (academic, professional)
+   Colour theme: Growth — emerald greens, sage backgrounds
+════════════════════════════════════════════════════════════════ */
+
+/* ── Design tokens (outside @layer so Tailwind v4 cannot override) ── */
+
+/* ─── Green palette (5 shades, light-to-dark) ───────────────────────
+   mint    #f0fdf4  — page background
+   sage    #bbf7d0  — tag backgrounds, subtle fills
+   jade    #22c55e  — hover states, secondary accents
+   emerald #16a34a  — primary buttons, active states
+   hunter  #14532d  — headings, deep borders, logo
+──────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Shade tokens */
+  --green-mint:    #f0fdf4;
+  --green-sage:    #bbf7d0;
+  --green-jade:    #22c55e;
+  --green-emerald: #16a34a;
+  --green-hunter:  #14532d;
+
+  /* Semantic tokens — light mode */
+  --bg:              #f0fdf4;          /* mint */
+  --bg-secondary:    #dcfce7;          /* very light sage */
+  --bg-tertiary:     #bbf7d0;          /* sage */
+  --text:            #052e16;          /* deep hunter */
+  --text-secondary:  #166534;          /* hunter-mid */
+  --text-muted:      #4ade80;          /* jade-light */
+  --border:          #86efac;          /* sage-mid */
+  --border-strong:   #22c55e;          /* jade */
+  --accent:          #16a34a;          /* emerald */
+  --accent-hover:    #15803d;          /* emerald-dark */
+  --tag-bg:          #dcfce7;          /* sage-light */
+  --tag-text:        #166534;          /* hunter-mid */
+  --card-hover-bg:   #f0fdf4;          /* mint */
+  --card-border-accent: #22c55e;       /* jade — left accent on card hover */
+  --nav-bg:          #f0fdf4;          /* mint */
+  --logo-color:      #14532d;          /* hunter */
+  --section-bar:     #16a34a;          /* emerald — section title left bar */
+  --danger:          #dc2626;
+  --success:         #16a34a;
+  --warning:         #854d0e;
+  --info:            #0f766e;
+  --trending-color:  #92400e;
+  --trending-bg:     #fef3c7;
+  --trending-border: #d97706;
+}
+
+[data-theme="dark"] {
+  /* Shade tokens (dark variants) */
+  --green-mint:    #052e16;
+  --green-sage:    #14532d;
+  --green-jade:    #166534;
+  --green-emerald: #22c55e;
+  --green-hunter:  #86efac;
+
+  /* Semantic tokens — dark mode */
+  --bg:              #052e16;          /* deep hunter */
+  --bg-secondary:    #14532d;          /* hunter */
+  --bg-tertiary:     #166534;          /* hunter-mid */
+  --text:            #f0fdf4;          /* mint */
+  --text-secondary:  #86efac;          /* sage */
+  --text-muted:      #4ade80;          /* jade-light */
+  --border:          #166534;          /* hunter-mid */
+  --border-strong:   #22c55e;          /* jade */
+  --accent:          #22c55e;          /* jade — pops on dark */
+  --accent-hover:    #4ade80;          /* jade-light */
+  --tag-bg:          #14532d;          /* hunter */
+  --tag-text:        #86efac;          /* sage */
+  --card-hover-bg:   #14532d;          /* hunter */
+  --card-border-accent: #4ade80;       /* jade-light */
+  --nav-bg:          #052e16;          /* deep hunter */
+  --logo-color:      #86efac;          /* sage */
+  --section-bar:     #22c55e;          /* jade */
+  --danger:          #f87171;
+  --success:         #22c55e;
+  --warning:         #fbbf24;
+  --info:            #2dd4bf;
+  --trending-color:  #fbbf24;
+  --trending-bg:     #422006;
+  --trending-border: #d97706;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: "Times New Roman", Times, Georgia, serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    min-height: 100vh;
+  }
+
+  /* Remove default button/input styles */
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Times New Roman", Times, Georgia, serif;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text);
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+
+  /* Focus ring */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ── Layout utilities ────────────────────────────────────── */
+.container-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-main {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-main {
+    padding: 0 2rem;
+  }
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.card {
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  position: relative;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  background-color: var(--card-hover-bg);
+}
+
+/* ── Button ──────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-outline:hover {
+  border-color: var(--border-strong);
+  background-color: var(--bg-secondary);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text);
+}
+
+.btn-danger {
+  background-color: transparent;
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger);
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Tag / Badge ─────────────────────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--border);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tag-accent {
+  background-color: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+/* ── Input ───────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  padding: 0.55rem 0.875rem;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 0.9rem;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.input:focus {
+  border-color: var(--border-strong);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Select ──────────────────────────────────────────────── */
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+/* ── Label ───────────────────────────────────────────────── */
+.label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.375rem;
+}
+
+/* ── Section divider ─────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ── Section header ──────────────────────────────────────── */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+/* ── Grid ────────────────────────────────────────────────── */
+.opportunity-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .opportunity-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .opportunity-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Navbar ──────────────────────────────────────────────── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--nav-bg);
+  border-bottom: 1px solid var(--border);
+  height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Alert / empty state ─────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+}
+
+/* ── Loading ─────────────────────────────────────────────── */
+.skeleton {
+  background: var(--bg-tertiary);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── Form field group ────────────────────────────────────── */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Admin table ─────────────────────────────────────────── */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+  background-color: var(--bg-secondary);
+}
+
+.admin-table td {
+  padding: 0.75rem 0.875rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.admin-table tr:hover td {
+  background-color: var(--bg-secondary);
+}
+
+/* ── Category pill nav ───────────────────────────────────── */
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.875rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.cat-pill:hover,
+.cat-pill.active {
+  border-color: var(--accent);
+  color: var(--text);
+  background-color: var(--card-hover-bg);
+}
+
+.cat-pill.active {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+/* ── Tiptap rich text editor ─────────────────────────────── */
+.tiptap-editor {
+  min-height: 200px;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background-color: var(--bg);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  outline: none;
+}
+
+.tiptap-editor:focus {
+  border-color: var(--border-strong);
+}
+
+.tiptap-editor p { margin-bottom: 0.75rem; }
+.tiptap-editor h2 { font-size: 1.25rem; margin: 1rem 0 0.5rem; }
+.tiptap-editor h3 { font-size: 1.1rem; margin: 0.75rem 0 0.375rem; }
+.tiptap-editor ul, .tiptap-editor ol { margin-left: 1.5rem; margin-bottom: 0.75rem; }
+.tiptap-editor strong { font-weight: 700; }
+.tiptap-editor em { font-style: italic; }
+.tiptap-editor a { text-decoration: underline; }
+.tiptap-editor .is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* ── Rich text rendered content ──────────────────────────── */
+.prose {
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+
+.prose p { margin-bottom: 0.875rem; }
+.prose h2 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; color: var(--text); }
+.prose h3 { font-size: 1.05rem; margin: 1.25rem 0 0.375rem; color: var(--text); }
+.prose ul, .prose ol { margin-left: 1.5rem; margin-bottom: 0.875rem; }
+.prose li { margin-bottom: 0.25rem; }
+.prose strong { font-weight: 700; color: var(--text); }
+.prose a { text-decoration: underline; }
+
+/* ── Utility ─────────────────────────────────────────────── */
+/* ── Hover link utilities (for server components) ────────────────────────── */
+.footer-link {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  transition: color 0.1s ease;
+}
+.footer-link:hover { color: var(--text); }
+
+.nav-link {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: color 0.1s ease;
+}
+.nav-link:hover { color: var(--text); }
+
+.text-link {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  transition: color 0.1s ease;
+}
+.text-link:hover { color: var(--text); }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
